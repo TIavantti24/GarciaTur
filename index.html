@@ -627,19 +627,23 @@ borders: top right bottom left !important; border-color: #404040 !important; bor
         </p>
       </div>
     </section>
-    <div class="container my-5 text-center">
+      <div class="container my-5 text-center">
       <h2 class="mb-4">Galeria de Vídeos</h2>
-      <div id="video-container" class="mb-3">
+      
+      <!-- Botão de Play para iniciar a galeria de vídeos -->
+      <button id="play-button" class="btn btn-success mb-4">Play</button>
+  
+      <div id="video-container" class="mb-3 d-none">
         <video id="video-player" controls class="w-100" style="max-width: 600px; height: 400px;">
-          <source id="video-source" src="video1.mp4" type="video/mp4">
+          <source id="video-source" src="video2.mp4" type="video/mp4">
           Seu navegador não suporta a tag de vídeo.
         </video>
       </div>
-    
+  
       <!-- Botões de navegação -->
-      <button id="prev-button" class="btn btn-primary me-2">Anterior</button>
-      <button id="next-button" class="btn btn-primary">Próximo</button>
-    </div>			  
+      <button id="prev-button" class="btn btn-primary me-2 d-none">Anterior</button>
+      <button id="next-button" class="btn btn-primary d-none">Próximo</button>
+    </div>	  
     <center>
       <h1 id="tarifarios">Tarifarios</h1>
       <div class="fixed-container">
@@ -853,6 +857,7 @@ borders: top right bottom left !important; border-color: #404040 !important; bor
 <script>
   // Lista de vídeos
   const videos = [
+    "images/video1.mp4",
     "images/video2.mp4",
     "images/video3.mp4",
     "images/video4.mp4",
@@ -874,32 +879,46 @@ borders: top right bottom left !important; border-color: #404040 !important; bor
 
   let currentVideoIndex = 0;
 
-  // Elementos HTML
-  const videoPlayer = document.getElementById("video-player");
-  const videoSource = document.getElementById("video-source");
-  const prevButton = document.getElementById("prev-button");
-  const nextButton = document.getElementById("next-button");
+    // Elementos HTML
+    const videoPlayer = document.getElementById("video-player");
+    const videoSource = document.getElementById("video-source");
+    const prevButton = document.getElementById("prev-button");
+    const nextButton = document.getElementById("next-button");
+    const playButton = document.getElementById("play-button");
+    const videoContainer = document.getElementById("video-container");
 
-  // Função para trocar o vídeo
-  function changeVideo(index) {
-    videoSource.src = videos[index];
-    videoPlayer.load(); // Recarrega o vídeo com o novo src
-  }
-
-  // Evento do botão "Próximo"
-  nextButton.addEventListener("click", function() {
-    if (currentVideoIndex < videos.length - 1) {
-      currentVideoIndex++;
-      changeVideo(currentVideoIndex);
+    // Função para trocar o vídeo
+    function changeVideo(index) {
+      videoSource.src = videos[index];
+      videoPlayer.load(); // Recarrega o vídeo com o novo src
     }
-  });
 
-  // Evento do botão "Anterior"
-  prevButton.addEventListener("click", function() {
-    if (currentVideoIndex > 0) {
-      currentVideoIndex--;
+    // Evento do botão "Play" - exibe o primeiro vídeo e os botões de navegação
+    playButton.addEventListener("click", function() {
+      // Mostrar o vídeo e os botões de navegação
+      videoContainer.classList.remove("d-none");
+      prevButton.classList.remove("d-none");
+      nextButton.classList.remove("d-none");
+      playButton.classList.add("d-none"); // Esconde o botão de play
+
+      // Iniciar o primeiro vídeo
       changeVideo(currentVideoIndex);
-    }
-  });
-</script>
+    });
+
+    // Evento do botão "Próximo"
+    nextButton.addEventListener("click", function() {
+      if (currentVideoIndex < videos.length - 1) {
+        currentVideoIndex++;
+        changeVideo(currentVideoIndex);
+      }
+    });
+
+    // Evento do botão "Anterior"
+    prevButton.addEventListener("click", function() {
+      if (currentVideoIndex > 0) {
+        currentVideoIndex--;
+        changeVideo(currentVideoIndex);
+      }
+    });
+  </script>
 </body></html>
